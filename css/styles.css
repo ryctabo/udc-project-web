@@ -2,7 +2,7 @@ body {
   background: #fffef7;
 }
 
-.bg-unicartagena {
+#login .bg-unicartagena {
   background: url('../img/unicartagena-bg.png') center;
   width: 100%;
   height: 100%;
@@ -10,7 +10,7 @@ body {
   opacity: .05;
 }
 
-.card-login {
+#login .card-login {
   margin-top: 100px;
 }
 
