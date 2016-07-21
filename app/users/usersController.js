@@ -1,0 +1,3 @@
+moduleUdc.controller('usersController', [function () {
+  
+}]);
