@@ -1,0 +1,42 @@
+<div class="container" ui-view>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Facultades</span>
+      <p>
+        En este espacio encontraras todo lo necesario para poder gestionar las facultades de la Universidad de Cartagena, por favor tener cuidado con la gestión, cada vez que intentes eliminar una facultad ten en cuenta que va a estar relacionado con otras entidades como programas, documentos o actividades.
+      </p>
+    </div>
+  </div>
+  <div class="loading" ng-show="faculties.length === 0 && loading">
+    <div class="preloader-wrapper active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="center no-content" ng-hide="loading || faculties.length > 0">
+    <i class="material-icons">account_balance</i>
+    <p>No tienes facultades registradas</p>
+  </div>
+  <div class="card card-faculty" ng-repeat="faculty in faculties">
+    <div class="card-content">
+      <span class="card-title">{{faculty.name}} ({{faculty.nomenclature}})</span>
+      <span class="right">COD:{{faculty.code}}</span>
+    </div>
+    <div class="card-action">
+      <a ui-sref="faculties.edit({facultyId: faculty.id})"><i class="material-icons">edit</i>Modificar</a>
+      <a href="" class="delete red-text" ng-click="deleteFaculty()"><i class="material-icons">delete</i>Eliminar</a>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large light-blue waves-effect" ui-sref="faculties.new"><i class="material-icons">add</i></a>
+  </div>
+</div>
