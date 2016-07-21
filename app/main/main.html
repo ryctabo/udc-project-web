@@ -1,4 +1,38 @@
-<p>main</p>
-<div ui-view>
-    aca va el hijo
+<script src="js/initialize.js"></script>
+<ul id="slide-out" class="side-nav fixed">
+  <div class="row profile valign-wrapper">
+    <div class="col no-padding">
+      <img src="images/profile-icon.png" class="circle profile-photo">
+    </div>
+    <div class="col s11 no-padding truncate">
+      <span class="profile-name">Nombre de usuario</span>
+    </div>
+    <div class="col s1 no-padding"><i class="material-icons hide-on-med-and-down">chevron_left</i></div>
+  </div>
+  <li class="hide"><a class="grey-text text-darken-1 waves-effect waves-main-list" ui-sref="users"><i class="material-icons">people</i>Usuarios</a></li>
+  <li><a class="grey-text text-darken-1 waves-effect waves-main-list" ui-sref="faculties"><i class="material-icons">account_balance</i>Facultades</a></li>
+  <li><a class="grey-text text-darken-1 waves-effect waves-main-list" ui-sref="programs"><i class="material-icons">school</i>Programas</a></li>
+  <div class="divider"></div>
+  <li><a class="grey-text text-darken-1 waves-effect waves-main-list" ui-sref="documents"><i class="material-icons">book</i> Documentos</a></li>
+</ul>
+<div class="navbar-fixed">
+  <nav class="amber">
+    <div class="nav-wrapper">
+      <a href="#" data-activates="slide-out" class="button-collapse"><i class="material-icons">menu</i></a>
+      <a href="" class="brand-logo">Home</a>
+      <ul class="right">
+        <li><a class="dropdown-button" href="#!" data-activates="notifications"><i class="material-icons">notifications_none</i></a></li>
+      </ul>
+    </div>
+  </nav>
 </div>
+<div id="notifications" class="notification-container hide">
+  <p>Notificaciones</p>
+  <div class="no-notifications">
+    <img src="images/no-notifications.gif">
+    <p>No tienes notificaciones actualmente.</p>
+  </div>
+  <div class="notifications">
+  </div>
+</div>
+<div class="main-container" ui-view></div>

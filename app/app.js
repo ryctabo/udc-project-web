@@ -1,6 +1,5 @@
 'use strict';
-
-var moduleUdc = angular.module("moduleUdc", ['ui.router']);
+var moduleUdc = angular.module('moduleUdc', ['ui.router', 'ngResource']);
 
 moduleUdc.config(function ($stateProvider) {
 
@@ -17,16 +16,61 @@ moduleUdc.config(function ($stateProvider) {
     }).state('mainIndex', {
       url: '/',
       parent: 'main',
-      template: '<div ui-view></div>'
+      template: '<h4 style="color: #555;">Bienvenido Gustavo Pacheco</h4>'
+    })
+    .state('users', {
+      url: '/users',
+      templateUrl: 'app/users/users.html',
+      controller: 'usersController',
+      parent: 'main'
+    })
+    .state('faculties', {
+      url: '/faculties',
+      templateUrl: '/app/faculties/faculties.html',
+      controller: 'facultiesController',
+      parent: 'main'
+    })
+    .state('faculties.new', {
+      url: '/new',
+      templateUrl: '/app/faculties/faculties-form.html',
+      controller: 'facultiesFormController'
+    })
+    .state('faculties.edit', {
+      url: '/{facultyId}/edit',
+      templateUrl: '/app/faculties/faculties-form.html',
+      controller: 'facultiesFormController'
     })
     .state('programs', {
       url: '/programs',
-      parent: 'main',
-      template: '<h1>Programas (listado)</h1>'
+      templateUrl: 'app/programs/programs.html',
+      controller: 'programsController',
+      parent: 'main'
     })
-    
-    
-    
-
+    .state('programs.new', {
+      url: '/programs/new',
+      templateUrl: 'app/programs/programs-form.html',
+      controller: 'programsFormController'
+    })
+    .state('programs.edit', {
+      url: '/{programsId}/edit',
+      templateUrl: 'app/programs/programs-form.html',
+      controller: 'programsFormController'
+    })
+    .state('documents', {
+      url: '/documents',
+      templateUrl: 'app/documents/documents.html',
+      controller: 'documentsController',
+      parent: 'main'
+    })
+    .state('documents.new', {
+      url: '/new',
+      templateUrl: 'app/documents/documents-form.html',
+      controller: 'documentsFormController'
+    })
+    .state('documents.edit', {
+      url: '/{documentId}/edit',
+      templateUrl: 'app/documents/documents-form.html',
+      controller: 'documentsFormController'
+    });
 
 });
