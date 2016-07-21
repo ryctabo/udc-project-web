@@ -1,0 +1,22 @@
+<div class="container" ui-view>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Documentos</span>
+      <p>Aquí encontraras todos los documentos que se han registrado</p>
+    </div>
+  </div>
+  <div class="card" ng-repeat="document in documents">
+    <div class="card-content">
+      <span class="card-title">{{document.name}}</span>
+      <p>Facultad: {{document.faculty_id}}</p>
+    </div>
+    <div class="card-action">
+      <a href="" ui-sref="documents.edit({documentId: document.id})"><i class="material-icons">edit</i>Modificar</a>
+      <a ng-href="{{ 'http://localhost:8086/udcplatform/webapi/files/documents/' + document.doc_id}}" target="_blank"><i class="material-icons">file_download</i>Descargar</a>
+      <a href="" class="delete red-text" ng-click="console.log('deleting document');"><i class="material-icons">delete</i>Eliminar</a>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a class="btn-floating btn-large light-blue waves-effect" ui-sref="documents.new"><i class="material-icons">add</i></a>
+  </div>
+</div>
