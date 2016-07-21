@@ -1,0 +1,41 @@
+<div class="container" ui-view>
+  <div class="card">
+    <div class="card-content">
+      <span class="card-title">Programas</span>
+      <p>En este espacio encontraras todos los programas de la Universidad de Cartagena</p>
+    </div>
+  </div>
+  <div class="loading" ng-show="loading && programs.length === 0">
+    <div class="preloader-wrapper active">
+      <div class="spinner-layer spinner-blue-only">
+        <div class="circle-clipper left">
+          <div class="circle"></div>
+        </div>
+        <div class="gap-patch">
+          <div class="circle"></div>
+        </div>
+        <div class="circle-clipper right">
+          <div class="circle"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="center no-content" ng-hide="loading || programs.length > 0">
+    <i class="material-icons">school</i>
+    <p>No tienes programas registrados</p>
+  </div>
+  <div class="card" ng-repeat="program in programs">
+    <div class="card-content">
+      <span class="card-title">{{program.name}} ({{program.nomenclature}})</span>
+      <span class="right">COD: {{program.code}}</span>
+      <p>Facultad: {{program.faculty_id}}</p>
+    </div>
+    <div class="card-action">
+      <a href="" ui-sref="programs.edit({programsId: program.id})"><i class="material-icons">edit</i>Modificar</a>
+      <a href="" class="delete red-text" ng-click="deleteProgram()"><i class="material-icons">delete</i>Eliminar</a>
+    </div>
+  </div>
+  <div class="fixed-action-btn">
+    <a href="" class="btn-floating btn-large light-blue waves-effect" ui-sref="programs.new"><i class="material-icons">add</i></a>
+  </div>
+</div>

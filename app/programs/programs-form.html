@@ -1,0 +1,30 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Programa</span>
+    <form ng-submit="sendProgram()">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="program_code" type="text" class="validate" maxlength="3" ng-model="program.code">
+          <label for="program_code" ng-class="{'active': id !== undefined}">Código del programa</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="program_name" type="text" class="validate" maxlength="50" ng-model="program.name">
+          <label for="program_name" ng-class="{'active': id !== undefined}">Nombre del programa</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="program_nomenclature" type="text" class="validate" maxlength="3" ng-model="program.nomenclature">
+          <label for="program_nomenclature" ng-class="{'active': id !== undefined}">Nomenclatura</label>
+        </div>
+        <div class="input-field col s12">
+          <select id="select_faculty" ng-model="program.faculty_id">
+            <option value="" disabled selected>Seleccione una facultad</option>
+          </select>
+          <label>Facultad</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light light-blue" type="submit" name="action">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
