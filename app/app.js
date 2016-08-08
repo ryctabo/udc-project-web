@@ -1,8 +1,6 @@
 'use strict';
 var moduleUdc = angular.module('moduleUdc', ['ui.router', 'ngResource']);
-
-moduleUdc.config(function ($stateProvider) {
-
+moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $httpProvider) {
   $stateProvider
     .state('login', {
       url: '/login',
@@ -13,7 +11,8 @@ moduleUdc.config(function ($stateProvider) {
       abstract: true,
       templateUrl: 'app/main/main.html',
       controller: 'mainController'
-    }).state('mainIndex', {
+    })
+    .state('mainIndex', {
       url: '/',
       parent: 'main',
       template: '<h4 style="color: #555;">Bienvenido Gustavo Pacheco</h4>'
@@ -72,5 +71,17 @@ moduleUdc.config(function ($stateProvider) {
       templateUrl: 'app/documents/documents-form.html',
       controller: 'documentsFormController'
     });
-
-});
+  
+  $httpProvider.interceptors.push(function ($q) {
+    return {
+      request: function (config) {
+        if (sessionStorage.authToken)
+          config.headers.Authorization = 'Bearer ' + sessionStorage.authToken;
+        return config;
+      },
+      response: function (response) {
+        return response;
+      }
+    };
+  });
+}]);

@@ -1,33 +1,44 @@
-<div id="login">
-  <div class="bg-unicartagena"></div>
-  <div class="container">
-    <section class="row">
-      <div class="col s12 l6">
-        <form class="card card-login" ng-submit="login()">
-          <div class="card-content">
-            <img src="images/unicartagena.jpg" />
-            <div class="divider"></div>
-            <h5>Inicio de sesión</h5>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="username" type="text" class="validate" ng-model="form.username">
-                <label for="username" data-error="El nombre de usuario o correo  es incorrecto.">Nombre de usuario o correo electrónico</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <input id="password" type="password" class="validate" ng-model="form.password">
-                <label for="password">Contraseña</label>
-              </div>
-            </div>
-            <div class="row">
-              <div class="input-field col s12">
-                <button class="btn btn-login amber">Iniciar sesión</button>
-              </div>
+<div id="login" class="container">
+  <header>
+    <div id="container-logo" class="center-align">
+      <img src="images/unicartagena-logo.png" height="75" />
+      <div class="h-divider"></div>
+      <img src="images/udc-docevent.png" height="75" />
+    </div>
+  </header>
+  <section class="row">
+    <div class="col s12 m6 offset-m3">
+      <form class="card card-login" ng-submit="login()">
+        <div class="card-content">
+          <h5>Inicio de sesión</h5>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="username" type="text" class="validate" ng-model="form.username">
+              <label for="username">Nombre de usuario o correo electrónico</label>
             </div>
           </div>
-        </form>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="password" type="password" class="validate" ng-model="form.password">
+              <label for="password">Contraseña</label>
+            </div>
+          </div>
+          <div class="row" ng-class="{hide: !unauthorizate}" style="font-size: 12px; margin: 0 0 10px 0; color: red;">
+            Usuario o contraseña incorrectos
+          </div>
+          <div class="row">
+            <div class="col s6">
+              <button class="waves-effect btn-flat amber white-text">Iniciar sesión</button>
+            </div>
+            <div class="col s6 right-align">
+              <a href="#">¿Olvidaste la contraseña?</a>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="footer center-align">
+        Cualquier duda consultar con el administrador del sistema.
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </div>
