@@ -12,7 +12,7 @@
     </div>
     <div class="card-action">
       <a href="" ui-sref="documents.edit({documentId: document.id})"><i class="material-icons">edit</i>Modificar</a>
-      <a ng-href="{{ 'http://localhost:8086/udcplatform/webapi/files/documents/' + document.doc_id}}" target="_blank"><i class="material-icons">file_download</i>Descargar</a>
+      <a ng-href="{{'http://localhost:8084/udcplatform/webapi/files/documents/' + document.doc_id + '?authToken=' + token}}" target="_blank"><i class="material-icons">file_download</i>Descargar</a>
       <a href="" class="delete red-text" ng-click="console.log('deleting document');"><i class="material-icons">delete</i>Eliminar</a>
     </div>
   </div>
