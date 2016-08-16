@@ -4,16 +4,16 @@ moduleUdc.factory('apiService', ['$resource', '$http', 'appConfig', function ($r
 
   //ACCOUNTS SERVICE
   apiService.accounts = {
-    login: function(loginObject) {
+    login: function (loginObject) {
       return $http.post(appConfig.apiUrl + 'accounts/login', loginObject);
     },
-    reset: function(resetObject) {
+    reset: function (resetObject) {
       return $http.post(appConfig.apiUrl + 'accounts/reset', resetObject);
     },
-    pin: function(email) {
+    pin: function (email) {
       return $http.post(appConfig.apiUrl + 'accounts/pin?q=' + email, null);
     },
-    validatePin: function(pinCode, email) {
+    validatePin: function (pinCode, email) {
       return $http.get(appConfig.apiUrl + 'accounts/pin/' + pinCode + '?q=' + email);
     }
   };
@@ -23,19 +23,22 @@ moduleUdc.factory('apiService', ['$resource', '$http', 'appConfig', function ($r
     'update': { method: 'PUT' }
   });
   apiService.users = {
-    getAll: function () {
-      return users.query();
+    getAll: function (roleType) {
+      return users.query({role: roleType});
     },
-    get: function(userId) {
+    get: function (userId) {
       return users.get({id: userId});
     },
-    add: function(user) {
+    getByEmail: function (email) {
+      return $http.get(appConfig.apiUrl + 'users/email', { params: { q: email } });
+    },
+    add: function (user) {
       return $http.post(appConfig.apiUrl + 'users?gp=true', user);
     },
-    update: function(userId, user) {
+    update: function (userId, user) {
       return users.update({id: userId}, user);
     },
-    delete: function(userId) {
+    delete: function (userId) {
       return users.delete({id: userId});
     }
   };

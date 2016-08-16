@@ -15,7 +15,7 @@ moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $
     .state('mainIndex', {
       url: '/',
       parent: 'main',
-      template: '<h4 style="color: #555;">Bienvenido Gustavo Pacheco</h4>'
+      template: '<h4 style="color: #555;">Bienvenido {{sessionInfo.name}}</h4>'
     })
     .state('users', {
       url: '/users',
@@ -71,7 +71,7 @@ moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $
       templateUrl: 'app/documents/documents-form.html',
       controller: 'documentsFormController'
     });
-  
+
   $httpProvider.interceptors.push(function ($q) {
     return {
       request: function (config) {
