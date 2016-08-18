@@ -20,9 +20,13 @@ moduleUdc.controller('usersController', ['$scope', 'apiService', function ($scop
 
   $scope.saveUser = function () {
     if ($scope.validEmail) {
-      apiService.users.add($scope.newUser);
+      apiService.users.add($scope.newUser).$promise.then(function (data) {
+        console.log(data);
+        $scope.users.push(data);
+      }, function (error) {
+        console.log(error);
+      });
       $('#addNewUserModal').closeModal();
-      $scope.loadUsers();
       $scope.newUser = {};
     } else {
       Materialize.toast('El correo electrónico es invalido.', 2000);
