@@ -17,6 +17,11 @@ moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $
       parent: 'main',
       template: '<h4 style="color: #555;">Bienvenido {{sessionInfo.name}}</h4>'
     })
+    .state('profile', {
+      url: '/profile',
+      parent: 'main',
+      template: '<h3 class="row" style="margin:0 0 10px 0;padding:0;">Perfil de usuario</h3>'
+    })
     .state('users', {
       url: '/users',
       templateUrl: 'app/users/users.html',
@@ -81,6 +86,15 @@ moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $
       },
       response: function (response) {
         return response;
+      },
+      requestError: function (rejection) {
+        return $q.reject(rejection);
+      },
+      responseError: function (rejection) {
+        if (rejection.status === 401) {
+          delete sessionStorage.authToken;
+        }
+        return $q.reject(rejection);
       }
     };
   });
