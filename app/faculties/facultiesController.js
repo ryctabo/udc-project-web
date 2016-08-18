@@ -26,6 +26,8 @@ moduleUdc.controller('facultiesController', ['$scope', 'apiService', function ($
       apiService.faculties.add($scope.facultyDetail).$promise.then(function (data) {
         $scope.faculties.push(data);
         $scope.edit = false;
+      }, function (error) {
+        console.log(error);
       });
   };
 
