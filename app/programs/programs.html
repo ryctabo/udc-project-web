@@ -1,41 +1,122 @@
-<div class="container" ui-view>
-  <div class="card">
-    <div class="card-content">
-      <span class="card-title">Programas</span>
-      <p>En este espacio encontraras todos los programas de la Universidad de Cartagena</p>
+<style>
+  .number-of-programs {
+    font-weight: 600;
+    font-size: 14px;
+    opacity: .5;
+  }
+  
+  table tr {
+    cursor: pointer;
+  }
+  
+  table tr.selected {
+    background-color: #EDEDED;
+  }
+  
+  .card-header {
+    width: 100%;
+  }
+  
+  .card-header .content {
+    padding: 40px;
+  }
+  
+  .card-header h5 {
+    font-weight: 400;
+  }
+  
+  .card-button {
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    padding: 5px 0 0 6px;
+  }
+</style>
+<h3 class="row" style="margin:0 0 10px 0;padding:0;">Programas</h3>
+<div class="row" style="margin:0;">
+  <div class="col l6 m6 s12 no-padding" style="position:relative;">
+    <a class="waves-effect btn-flat" style="position:absolute;top:-10px;right:5px;" ng-click="programDetail={};edit=true;newProgram=true;">Nuevo programa</a>
+    <div>
+      <h6>Lista de programas</h6></div>
+    <div class="divider"></div>
+    <div class="number-of-programs" ng-show="programs.length > 0">{{programs.length + ' programa' + (programs.length > 1 ? 's' : '')}}</div>
+    <div class="loading" style="margin-top:10px;" ng-show="loading">
+      <div class="preloader-wrapper small active">
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+      </div>
     </div>
+    <div class="center no-content" ng-hide="loading || faculties.length > 0">
+      <i class="material-icons">school</i>
+      <p>No tienes programas registrados</p>
+    </div>
+    <table class="highlight" ng-show="!loading && programs.length > 0">
+      <tbody>
+        <tr ng-repeat="program in programs" ng-class="{selected:itemSelected === $index}">
+          <td ng-click="changeProgram($index)">{{program.name}}</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
-  <div class="loading" ng-show="loading && programs.length === 0">
-    <div class="preloader-wrapper active">
-      <div class="spinner-layer spinner-blue-only">
-        <div class="circle-clipper left">
-          <div class="circle"></div>
+  <div class="col l6 m6 s12 no-padding">
+    <div class="card">
+      <div class="card-header blue">
+        <div style="padding:15px 12px 0;">
+          <a href="" class="waves-effect waves-light card-button right" ng-click="deleteProgram()"><i class="material-icons white-text">delete</i></a>
+          <a href="" class="waves-effect waves-light card-button right" ng-click="edit=true"><i class="material-icons white-text">edit</i></a>
+          <a href="" class="waves-effect waves-light card-button right" ng-click="saveProgram();"><i class="material-icons white-text">save</i></a>
         </div>
-        <div class="gap-patch">
-          <div class="circle"></div>
+        <div class="content white-text">
+          <h5>{{programDetail.name}}</h5>
         </div>
-        <div class="circle-clipper right">
-          <div class="circle"></div>
+      </div>
+      <div class="card-content">
+        <div class="row" style="margin:0;padding:0;" ng-hide="edit">
+          <p>
+            Código: {{programDetail.code}}
+            <br> Nomenclatura: {{programDetail.nomenclature}}
+          </p>
+        </div>
+        <div class="row" style="margin:0;padding:0;" ng-show="edit">
+          <form class="col s12 no-padding">
+            <p ng-show="newProgram">Para crear un nuevo programa llene el siguiente formulario</p>
+            <p ng-hide="newProgram">Para modificar el programa seleccionado complete todo el formulario</p>
+            <div class="row" style="margin:0;padding:0;">
+              <div class="input-field col s12 no-padding">
+                <input id="program_name" type="text" class="validate" ng-model="programDetail.name" required>
+                <label for="program_name" ng-class="{'active': programDetail.id !== undefined}" style="left:0;">Nombre del programa</label>
+              </div>
+              <div class="input-field col s12 no-padding">
+                <select id="select_faculty" ng-model="programDetail.faculty_id">
+                  <option value="" disabled selected>Seleccione una facultad</option>
+                </select>
+                <label style="left:0;">Facultad</label>
+              </div>
+              <div class="input-field col s6 no-padding">
+                <input id="program_code" type="text" class="validate" maxlength="3" ng-model="programDetail.code" required>
+                <label for="program_code" ng-class="{'active': programDetail.id !== undefined}" style="left:0;">Código</label>
+              </div>
+              <div class="input-field col s6" style="padding-right:0;">
+                <input id="program_nomenclature" style="text-transform:uppercase;" type="text" class="validate" ng-model="programDetail.nomenclature" required>
+                <label for="program_nomenclature" ng-class="{'active': programDetail.id !== undefined}">Nomenclatura</label>
+              </div>
+            </div>
+            <a class="waves-effect btn-flat right" ng-click="edit=false">Cancelar</a>
+          </form>
         </div>
       </div>
     </div>
   </div>
-  <div class="center no-content" ng-hide="loading || programs.length > 0">
-    <i class="material-icons">school</i>
-    <p>No tienes programas registrados</p>
-  </div>
-  <div class="card" ng-repeat="program in programs">
-    <div class="card-content">
-      <span class="card-title">{{program.name}} ({{program.nomenclature}})</span>
-      <span class="right">COD: {{program.code}}</span>
-      <p>Facultad: {{program.faculty_id}}</p>
-    </div>
-    <div class="card-action">
-      <a href="" ui-sref="programs.edit({programsId: program.id})"><i class="material-icons">edit</i>Modificar</a>
-      <a href="" class="delete red-text" ng-click="deleteProgram()"><i class="material-icons">delete</i>Eliminar</a>
-    </div>
-  </div>
-  <div class="fixed-action-btn">
-    <a href="" class="btn-floating btn-large light-blue waves-effect" ui-sref="programs.new"><i class="material-icons">add</i></a>
-  </div>
 </div>
+<script>
+  $('select').material_select();
+</script>
