@@ -7,6 +7,11 @@ moduleUdc.config(['$stateProvider', '$httpProvider', function ($stateProvider, $
       templateUrl: 'app/login/login.html',
       controller: 'loginController'
     })
+    .state('reset', {
+      url: '/resetPassword',
+      templateUrl: 'app/login/reset.html',
+      controller: 'resetController'
+    })
     .state('main', {
       abstract: true,
       templateUrl: 'app/main/main.html',

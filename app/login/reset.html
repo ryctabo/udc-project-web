@@ -1,0 +1,68 @@
+<div id="login" class="container">
+  <header>
+    <div id="container-logo" class="center-align">
+      <img src="images/unicartagena-logo.png" height="75" />
+      <div class="h-divider"></div>
+      <img src="images/udc-docevent.png" height="75" />
+    </div>
+  </header>
+  <section class="row">
+    <div class="col s12 m6 offset-m3">
+      <div class="progress amber lighten-4" style="margin-bottom: -8px;" ng-show="loading">
+        <div class="indeterminate amber"></div>
+      </div>
+      <div class="card">
+        <div class="card-content">
+          <h5>Recuperación de contraseña</h5>
+        </div>
+        <div class="amber white-text" style="padding:10px;">
+          <ol>
+            <li ng-class="{'blue-text' : currentStep === 1}">Enviar código de seguridad</li>
+            <li ng-class="{'blue-text' : currentStep === 2}">Verificar código</li>
+            <li ng-class="{'blue-text' : currentStep === 3}">Restablecer contraseña</li>
+          </ol>
+        </div>
+        <div class="card-content no-padding" style="margin:10px;">
+          <form ng-show="currentStep == 1">
+            <div class="row" style="margin:0;padding:0;">
+              <div class="input-field col s12">
+                <input id="email" type="email" class="validate" ng-model="form.email">
+                <label for="email" data-error="Este correo electrónico no existe">Correo electrónico</label>
+              </div>
+            </div>
+          </form>
+          <form ng-show="currentStep == 2">
+            <div class="row" style="margin:0;padding:0;">
+              <div class="input-field col s12">
+                <input id="pinCode" type="text" maxlength="6" class="validate" ng-class="{'valid': pinVerifier}" ng-model="form.pin">
+                <label for="pinCode" data-error="Este código de seguridad es incorrecto" data-success="Código verificado">Código de seguridad</label>
+              </div>
+            </div>
+          </form>
+          <form ng-show="currentStep == 3">
+            <div class="row" style="margin:0;padding:0;">
+              <div class="input-field col s12">
+                <input id="password" type="password" class="validate" ng-model="form.password">
+                <label for="password">Nueva contraseña</label>
+              </div>
+              <div class="input-field col s12">
+                <input id="confirmPassword" type="password" class="validate" ng-class="{'invalid': form.password !== confirmPassword && confirmPassword.length > 0}" ng-model="confirmPassword">
+                <label for="confirmPassword" data-error="Esta contraseña no coincide con la nueva">Confirmar contraseña</label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="card-action">
+          <a style="cursor:pointer;" ng-click="currentStep = currentStep - 1" ng-show="currentStep>1">Atrás</a>
+          <a style="cursor:pointer;" ng-click="onClickNextButton()">{{getButtonLabel();}}</a>
+        </div>
+      </div>
+      <div class="footer">
+        <p>
+          ¿Recuerdas tu contraseña? entonces, <a href="#" ui-sref="login">inicia sesión</a>
+          <br> Cualquier duda consultar con el administrador del sistema.
+        </p>
+      </div>
+    </div>
+  </section>
+</div>
