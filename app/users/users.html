@@ -1,0 +1,169 @@
+<style>
+  .number-of-users {
+    font-weight: 600;
+    font-size: 14px;
+    opacity: .5;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    font-size: 18px;
+    margin-bottom: -5px;
+  }
+  
+  .user-email {
+    opacity: .5;
+  }
+  
+  .user-photo {
+    width: 42px;
+    height: 42px;
+    overflow: hidden;
+    left: 15px;
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 18px;
+    line-height: 42px;
+    color: #fff;
+    background-color: #999;
+    text-align: center;
+    margin-right: 10px;
+  }
+  
+  .user-photo.rounded {
+    border-radius: 42px;
+  }
+  
+  .circle-user {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-radius: 15px;
+    background-color: white;
+    border: 1px solid white;
+  }
+</style>
+<h3 class="row" style="padding: 0; margin: 0 0 10px 0;">Usuarios</h3>
+<div class="row" style="margin-bottom:0;">
+  <div class="col l9 m12 s12" style="margin:0;padding:0;">
+    <ul id="usertypes" class="dropdown-content">
+      <li><a class="blue-text" ng-click="userTypeSelected='Todos los usuarios';loadUsers();">Todos los usuarios</a></li>
+      <li class="divider"></li>
+      <li><a class="blue-text" ng-click="userTypeSelected='Administrador';loadUsers();">Administrador</a></li>
+      <li><a class="blue-text" ng-click="userTypeSelected='Decanatura';loadUsers();">Decanatura</a></li>
+      <li><a class="blue-text" ng-click="userTypeSelected='Facultad';loadUsers();">Facultad</a></li>
+      <li><a class="blue-text" ng-click="userTypeSelected='Programa';loadUsers();">Programa</a></li>
+    </ul>
+    <div class="row" style="margin-bottom:0;">
+      <div class="col s12" style="margin:0;padding:0;position:relative;">
+        <a class="waves-effect btn-flat" style="position:absolute;top:-5px;right:0;" onclick="$('#addNewUserModal').openModal();">Nuevo usuario</a>
+        <div id="addNewUserModal" class="modal modal-fixed-footer" style="width:500px;">
+          <div class="modal-content">
+            <h4>Nuevo Usuario</h4>
+            <p>Complete el siguiente formulario para poder agregar un nuevo usuario.</p>
+            <div class="row" style="margin:0;padding:0;">
+              <form class="col s12" style="padding:0;margin:0;">
+                <div class="row" style="margin:0;">
+                  <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate" ng-model="newUser.name" required>
+                    <label for="first_name">Nombres</label>
+                  </div>
+                  <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate" ng-model="newUser.last_name" required>
+                    <label for="last_name">Apellidos</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="email" type="email" class="validate" ng-class="{invalid: emailExists}" ng-model="newUser.email" ng-blur="validateEmail()" required>
+                    <label for="email" data-error="Este correo electrónico es invalido o ya existe.">Correo electrónico</label>
+                  </div>
+                  <div class="input-field col s12">
+                    <input id="username" type="text" class="validate" ng-model="newUser.username">
+                    <label for="username">Nombre de usuario (Opcional)</label>
+                  </div>
+                  <div class="col s12">
+                    <p>Tipo de usuario:</p>
+                  </div>
+                  <div class="col s4">
+                    <input name="group1" type="radio" id="decanatura" ng-click="newUser.roles=['DECANATURA']"/>
+                    <label for="decanatura">Decanatura</label>
+                  </div>
+                  <div class="col s4">
+                    <input name="group1" type="radio" id="facultad" ng-click="newUser.roles=['DECANATURA']"/>
+                    <label for="facultad">Facultad</label>
+                  </div>
+                  <div class="col s4">
+                    <input name="group1" type="radio" id="programa" ng-click="newUser.roles=['DECANATURA']"/>
+                    <label for="programa">Programa</label>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <a class="modal-action modal-close waves-effect btn-flat" style="margin-left:5px;">Cancelar</a>
+            <a class="waves-effect btn-flat" style="margin-left:5px;" ng-click="newUser={};emailExists=false;">Limpiar</a>
+            <a class="waves-effect waves-light btn-flat amber white-text" ng-click="saveUser()">Guardar</a>
+          </div>
+        </div>
+        <div style="display:inline-block;">
+          <a class="dropdown-button" style="cursor:pointer;" data-activates="usertypes">{{userTypeSelected}}<i class="material-icons right">arrow_drop_down</i></a>
+        </div>
+        <div class="divider" style="margin-top:10px;"></div>
+        <div class="loading" style="margin-top:10px;" ng-show="loading">
+          <div class="preloader-wrapper small active">
+            <div class="spinner-layer spinner-blue-only">
+              <div class="circle-clipper left">
+                <div class="circle"></div>
+              </div>
+              <div class="gap-patch">
+                <div class="circle"></div>
+              </div>
+              <div class="circle-clipper right">
+                <div class="circle"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="number-of-users" ng-hide="loading">{{users.length + ' usuario' + (users.length > 1 ? 's' : '')}}</div>
+        <table class="highlight" ng-hide="loading">
+          <tbody>
+            <tr ng-repeat="user in users">
+              <td width="42px" style="position:relative;">
+                <div class="circle-user blue hide"></div>
+                <i class="material-icons user-photo rounded">person</i>
+              </td>
+              <td>
+                <div class="user-name">{{user.full_name}}</div>
+                <div class="user-email">{{user.email}}</div>
+              </td>
+              <td width="50px" class="blue-text">
+                <div class="switch">
+                  <label>
+                    <input type="checkbox" ng-model="user.enabled">
+                    <span class="lever"></span>
+                  </label>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <ul class="pagination center hide" style="margin-bottom:0;padding:0;">
+          <li class="disabled"><a><i class="material-icons">chevron_left</i></a></li>
+          <li class="active amber"><a>1</a></li>
+          <li class="waves-effect"><a>2</a></li>
+          <li class="waves-effect"><a>3</a></li>
+          <li class="waves-effect"><a>4</a></li>
+          <li class="waves-effect"><a>5</a></li>
+          <li class="waves-effect"><a><i class="material-icons">chevron_right</i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="col l3 m12 s12"></div>
+</div>
+<script>
+  $('.dropdown-button').dropdown({
+    constrain_width: false
+  });
+  $('#addNewUserModal').closeModal();
+</script>

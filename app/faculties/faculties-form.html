@@ -1,0 +1,24 @@
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Facultad</span>
+    <form ng-submit="sendFaculty()">
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="faculty_code" type="text" class="validate" maxlength="3" ng-model="faculty.code">
+          <label for="faculty_code" ng-class="{'active': id !== undefined}">Código de la facultad</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="faculty_name" type="text" class="validate" maxlength="50" ng-model="faculty.name">
+          <label for="faculty_name" ng-class="{'active': id !== undefined}">Nombre de la facultad</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="faculty_nomenclature" type="text" class="validate" maxlength="3" ng-model="faculty.nomenclature">
+          <label for="faculty_nomenclature" ng-class="{'active': id !== undefined}">Nomenclatura</label>
+        </div>
+        <div class="col">
+          <button class="btn waves-effect waves-light light-blue" type="submit" name="action">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

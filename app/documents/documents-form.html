@@ -1,0 +1,117 @@
+<script>
+  $(document).ready(function () {
+    $('select').material_select();
+    $('.datepicker').pickadate({
+      selectMonths: true,
+      selectYears: 16
+    });
+    $('.dropdown-button').dropdown({
+      inDuration: 300,
+      outDuration: 225,
+      constrain_width: true,
+      hover: false,
+      gutter: 0,
+      belowOrigin: true,
+      alignment: 'bottom'
+    });
+  });
+</script>
+<style>
+  .input-search {
+    margin-bottom: 0px;
+  }
+  
+  .col-person {
+    margin: 0;
+    margin-top: -15px;
+    position: relative;
+    z-index: 100 !important;
+  }
+  
+  .col-person .collection {
+    margin: 0;
+    position: absolute;
+  }
+</style>
+<div class="card">
+  <div class="card-content">
+    <span class="card-title">Documento</span>
+    <form ng-submit="saveDocument()">
+      <div class="row">
+        <div class="input-field col s12">
+          <select required ng-model="document.type">
+            <option disabled selected>Selecciona el tipo de documento</option>
+            <option>DOCUMENTO</option>
+            <option>ESTAMENTO</option>
+            <option>RESOLUCION</option>
+          </select>
+          <label>Tipo de documento</label>
+        </div>
+        <div class="file-field input-field col s12">
+          <div class="btn light-blue waves-effect waves-light">
+            <span>File</span>
+            <input type="file" file-model="files" required>
+          </div>
+          <div class="file-path-wrapper">
+            <input class="file-path validate" type="text">
+          </div>
+        </div>
+        <div class="input-field col s12">
+          <select id="select_faculty" ng-change="changeFaculty()" ng-model="document.faculty_id" required>
+            <option disabled selected>Selecciona una facultad</option>
+          </select>
+          <label>Facultad</label>
+        </div>
+        <div class="input-field col s12">
+          <select id="select_program" ng-model="document.program_id" ng-disabled="!facultySelected">
+            <option disabled selected>Selecciona un programa</option>
+          </select>
+          <label>Programa</label>
+        </div>
+        <div class="input-field col s12">
+          <input id="document_exp" type="date" class="datepicker" ng-model="document.exp" required>
+          <label for="document_exp">Fecha de expedido:</label>
+        </div>
+        <div class="col s12">
+          <p>Personas:</p>
+          <div ng-hide="document.people.length > 0">No ha seleccionado personas para este documento.</div>
+          <div class="chip" style="margin-top: 5px;" ng-repeat="person in document.people">{{person.fullName}}<i class="material-icons" ng-click="removePerson($index)">close</i></div>
+        </div>
+        <div class="input-field col s12 input-search">
+          <i class="material-icons prefix amber-text" style="padding-top: 10px;">search</i>
+          <input type="text" placeholder="Escriba el nombre de la persona que desea buscar" class="validate" ng-keypress="searchPerson($event)" ng-model="search">
+        </div>
+        <div class="col-person col s12 no-padding hide">
+          <div class="collection col s12 no-padding z-depth-1">
+            <a href="" class="collection-item grey-text text-darken-2">Persona 1</a>
+            <a href="" class="collection-item grey-text text-darken-2">Persona 2</a>
+            <a href="" class="collection-item grey-text text-darken-2">Persona 3</a>
+            <a href="" class="collection-item grey-text text-darken-2">Persona 4</a>
+            <a href="" class="collection-item grey-text text-darken-2">Persona 5</a>
+          </div>
+        </div>
+        <div class="col s12">
+          Si la persona no se encuentra registrada, puede registrarla desde el siguiente formulario.
+        </div>
+        <div class="input-field col s12 m3 no-padding" style="padding: 0 10px 0 10px !important;">
+          <input type="text" placeholder="Código" class="validate" ng-model="newPerson.code">
+        </div>
+        <div class="input-field col s12 m4 no-padding" style="padding: 0 10px 0 0 !important;">
+          <input type="text" placeholder="Nombres" class="validate" ng-model="newPerson.name">
+        </div>
+        <div class="input-field col s12 m4 no-padding" style="padding: 0 10px 0 0 !important;">
+          <input type="text" placeholder="Apellidos" class="validate" ng-model="newPerson.last_name">
+        </div>
+        <div class="input-field col s12 m1 no-padding">
+          <button class="btn-floating btn-small light-blue z-depth-0" style="margin: 0;" type="button" ng-click="addNewPerson()"><i class="material-icons">add</i></button>
+        </div>
+        <div class="col s12">
+          <p>Por favor, verifique todos los datos antes de guardar.</p>
+        </div>
+        <div class="col s12" style="margin-top: 30px;">
+          <button class="btn waves-effect light-blue right" type="submit">Guardar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
